@@ -34,9 +34,9 @@ public class DocumentsRepository {
     private DocumentsRepository() {
         // Populate the dummy repository with some documents.
         allDocuments = List.of(
-            new Document("Hello ChatGPT", List.of("Momo", "Charles"), "Ipsum lorem"),
-            new Document("Hi Siri", List.of("Steve"), "Ipsum lorem"),
-            new Document("Hey Google", List.of("Larry"), "Ipsum lorem")
+                new Document("Hello ChatGPT", List.of("Momo", "Charles"), "Ipsum lorem"),
+                new Document("Hi Siri", List.of("Steve"), "Ipsum lorem"),
+                new Document("Hey Google", List.of("Larry"), "Ipsum lorem")
         );
     }
 
@@ -48,9 +48,12 @@ public class DocumentsRepository {
         // This API provide methods to filter, group, manipulate iterable data.
         // Eventually, the data is collected and returned as a standard "List".
         return allDocuments.stream().filter(doc -> {
-            if (title != null && !doc.title().toLowerCase().contains(title.toLowerCase())) return false;
-            if (author != null && !doc.authors().contains(author)) return false;
-            if (summary != null && !doc.summary().contains(summary)) return false;
+            if (title != null && !doc.title().toLowerCase().contains(title.toLowerCase()))
+                return false;
+            if (author != null && !doc.authors().stream().anyMatch(a -> a.toLowerCase().contains(author.toLowerCase())))
+                return false;
+            if (summary != null && !doc.summary().toLowerCase().contains(summary.toLowerCase()))
+                return false;
             return true;
         }).toList();
     }
