@@ -48,6 +48,7 @@ public class DocumentsRepository {
         // This API provide methods to filter, group, manipulate iterable data.
         // Eventually, the data is collected and returned as a standard "List".
         return allDocuments.stream().filter(doc -> {
+            // Case-insensitive comparison requires to convert expressions to lower case first.
             if (title != null && !doc.title().toLowerCase().contains(title.toLowerCase()))
                 return false;
             if (author != null && !doc.authors().stream().anyMatch(a -> a.toLowerCase().contains(author.toLowerCase())))
